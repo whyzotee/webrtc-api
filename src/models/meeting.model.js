@@ -27,10 +27,11 @@ const meeting = mongoose.model("Meeting", Schema({
             delete ret._id;
             delete ret._v
         }
-    }
-    ,
+    },
     timestamps: true
 })
 );
 
-module.exports = meeting;
+module.exports = {
+    meeting
+};

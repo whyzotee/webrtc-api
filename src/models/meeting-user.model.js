@@ -27,8 +27,17 @@ const meetingUser = mongoose.model("MeetingUser", Schema({
     },
 
 }, {
+    toJSON: {
+        transform: (doc, ret) => {
+            ret.id = ret._id.toString()
+            delete ret._id;
+            delete ret._v
+        }
+    },
     timestamps: true
 })
 );
 
-module.exports = meetingUser;
+module.exports = {
+    meetingUser
+};

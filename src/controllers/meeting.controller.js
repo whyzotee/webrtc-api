@@ -1,6 +1,6 @@
 const meetingServices = require("../services/meeting.service");
 
-const startMeeting = (req, res, next) => {
+const startMeeting = (req, respone, next) => {
     const { hostId, hostName } = req.body;
 
     var model = {
@@ -10,23 +10,23 @@ const startMeeting = (req, res, next) => {
     };
 
     meetingServices.startMeeting(model, (err, res) => {
-        return err ? next(err) : res.status(200).send({ message: "Success", date: res.id });
+        return err ? next(err) : respone.status(200).send({ message: "Success", data: res.id });
     })
 }
 
-const checkMeetingExisits = (req, res, next) => {
+const checkMeetingExisits = (req, respone, next) => {
     const { meetingId } = req.query;
 
     meetingServices.checkMeetingExisits(meetingId, (err, res) => {
-        return err ? next(err) : res.status(200).send({ message: "Success", date: res });
+        return err ? next(err) : respone.status(200).send({ message: "Success", data: res });
     });
 }
 
-const getAllMeetingUsers = (req, res, next) => {
+const getAllMeetingUsers = (req, respone, next) => {
     const { meetingId } = req.query;
 
     meetingServices.getAllMeetingUsers(meetingId, (err, res) => {
-        return err ? next(err) : res.status(200).send({ message: "Success", date: res });
+        return err ? next(err) : respone.status(200).send({ message: "Success", data: res });
     });
 }
 

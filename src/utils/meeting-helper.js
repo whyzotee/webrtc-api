@@ -43,8 +43,8 @@ const joinMeeting = async (meetingId, socket, meetingServer, payload) => {
         if (err && !res) sendMessage(socket, { type: MeetingPayloadEnum.NOT_FOUND });
 
         if (res) {
-            addUser(socket, { meetingId, userId, name }).then((res) => {
-                if (res) sendMessage(socket, {
+            addUser(socket, { meetingId, userId, name }).then((result) => {
+                if (result) sendMessage(socket, {
                     type: MeetingPayloadEnum.JOINED_MEETING, data: { userId }
                 });
 
@@ -52,7 +52,7 @@ const joinMeeting = async (meetingId, socket, meetingServer, payload) => {
                     type: MeetingPayloadEnum.USER_JOINED,
                     data: { userId, name, ...payload.data }
                 });
-            }, (err) => console.log(err));
+            }).catch((err) => console.log(`[server] error: ${err}`));
         }
     })
 };
@@ -155,9 +155,11 @@ const endMeeting = (meetingId, socket, meetingServer, payload) => {
     });
 
     meetingServices.getAllMeetingUsers(meetingId, (err, res) => {
-        for (let index = 0; index < res.length; index++) {
-            const meetingUser = res[index];
-            meetingServer.socket.connected(meetingUser.socketId).disconnect();
+        console.log(`ressssssssssss ${res}`);
+        console.log(JSON.stringify(res).length);
+        for (let i = 0; i < res.length; i++) {
+            const meetingUser = res[i];
+            meetingServer.sockets.connected(meetingUser.socketId).disconnect();
         }
     });
 }

@@ -3,8 +3,7 @@ const { MeetingPayloadEnum } = require("./src/utils/meeting-payload.enum");
 
 const parseMessage = (msg) => {
     try {
-        const payload = JSON.parse(msg);
-        return payload;
+        return JSON.parse(msg);
     } catch (err) {
         return { type: MeetingPayloadEnum.UNKNOWN };
     }
@@ -53,12 +52,13 @@ const handleMessage = (meetingId, socket, message, meetingServer) => {
 const initMeetingServer = (server) => {
     const meetingServer = require("socket.io")(server);
 
-    meetingServer.on("connection", socket => {
+    meetingServer.on("connection", (socket) => {
+        console.log(`[server] meetingServer.on connection`);
 
-        const meetingId = socket.hanshake.query.id;
+        const meetingId = socket.handshake.query.id;
 
         listenMessage(meetingId, socket, meetingServer);
-    })
+    });
 }
 
 module.exports = {

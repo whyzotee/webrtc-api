@@ -12,7 +12,7 @@ const MeetingPayloadEnum = {
     MEETING_ENDED: "meeting-ended",
     ICECANDIDATE: "icecandidate",
     VIDEO_TOGGLE: "video-toggle",
-    AUDIO_TOGGLE: "audio-toggle",
+    _TOGGLE: "audio-toggle",
     NOT_FOUND: "not-found",
     UNKNOWN: "unknown"
 }

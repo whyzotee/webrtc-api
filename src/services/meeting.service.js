@@ -1,5 +1,5 @@
-const meeting = require("../models/meeting.model");
-const meetingUser = require("../models/meeting-user.model");
+const { meeting } = require("../models/meeting.model");
+const { meetingUser } = require("../models/meeting-user.model");
 
 const getAllMeetingUsers = async (meetId, callback) => {
     meetingUser.find({ meetingId: meetId }).then((res) => { return callback(null, res) }).catch((err) => { return callback(err) })
@@ -27,7 +27,7 @@ const joinMeeting = async (parmas, callback) => {
 }
 
 const isMeetingPresent = async (meetingId, callback) => {
-    meeting.findById(meetingId).populate("meetingUsers", "meetingUser").then((res) => {
+    meeting.findById(meetingId).populate("meetingUsers", "MeetingUser").then((res) => {
         !res ? callback("Invalid Meeting Id") : callback(null, true);
     }).catch((err) => {
         return callback(err, false);
@@ -35,7 +35,7 @@ const isMeetingPresent = async (meetingId, callback) => {
 }
 
 const checkMeetingExisits = async (meetingId, callback) => {
-    meeting.findById(meetingId).populate(meetingId, "hostId, hostName, startTime").then((res) => {
+    meeting.findById(meetingId, "hostId, hostName, startTime").populate("meetingUsers", "MeetingUser").then((res) => {
         !res ? callback("Invalid Meeting Id") : callback(null, res);
     }).catch((err) => {
         return callback(err, false);
