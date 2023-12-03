@@ -6,7 +6,7 @@ const meetingUser = mongoose.model("MeetingUser", Schema({
         type: String
     },
     meetingId: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Meeting"
     },
     userId: {

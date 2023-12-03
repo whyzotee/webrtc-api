@@ -17,16 +17,16 @@ const addUser = (socket, { meetingId, userId, name }) => {
                     isAlive: true
                 };
 
-                meetingServices.joinMeeting(model, (err, res) => {
-                    if (res) resolve(true);
+                meetingServices.joinMeeting(model, (err, results) => {
+                    if (results) resolve(true);
                     if (err) reject(err);
-                })
+                });
             } else {
                 meetingServices.updateMeetingUser({
                     userId: userId,
                     socketId: socket.id
-                }, (err, res) => {
-                    if (res) resolve(true);
+                }, (err, results) => {
+                    if (results) resolve(true);
                     if (err) reject(err);
                 })
             }
@@ -155,11 +155,9 @@ const endMeeting = (meetingId, socket, meetingServer, payload) => {
     });
 
     meetingServices.getAllMeetingUsers(meetingId, (err, res) => {
-        console.log(`ressssssssssss ${res}`);
-        console.log(JSON.stringify(res).length);
         for (let i = 0; i < res.length; i++) {
             const meetingUser = res[i];
-            meetingServer.sockets.connected(meetingUser.socketId).disconnect();
+            meetingServer.sockets.connected[meetingUser.socketId].disconnect();
         }
     });
 }

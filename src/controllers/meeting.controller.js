@@ -1,6 +1,6 @@
 const meetingServices = require("../services/meeting.service");
 
-const startMeeting = (req, respone, next) => {
+exports.startMeeting = (req, res, next) => {
     const { hostId, hostName } = req.body;
 
     var model = {
@@ -9,29 +9,23 @@ const startMeeting = (req, respone, next) => {
         startTime: Date.now()
     };
 
-    meetingServices.startMeeting(model, (err, res) => {
-        return err ? next(err) : respone.status(200).send({ message: "Success", data: res.id });
+    meetingServices.startMeeting(model, (err, results) => {
+        return err ? next(err) : res.status(200).send({ message: "Success", data: results.id });
     })
 }
 
-const checkMeetingExisits = (req, respone, next) => {
+exports.checkMeetingExisits = (req, res, next) => {
     const { meetingId } = req.query;
 
-    meetingServices.checkMeetingExisits(meetingId, (err, res) => {
-        return err ? next(err) : respone.status(200).send({ message: "Success", data: res });
+    meetingServices.checkMeetingExisits(meetingId, (err, results) => {
+        return err ? next(err) : res.status(200).send({ message: "Success", data: results });
     });
 }
 
-const getAllMeetingUsers = (req, respone, next) => {
+exports.getAllMeetingUsers = (req, res, next) => {
     const { meetingId } = req.query;
 
-    meetingServices.getAllMeetingUsers(meetingId, (err, res) => {
-        return err ? next(err) : respone.status(200).send({ message: "Success", data: res });
+    meetingServices.getAllMeetingUsers(meetingId, (err, results) => {
+        return err ? next(err) : res.status(200).send({ message: "Success", data: results });
     });
-}
-
-module.exports = {
-    startMeeting,
-    checkMeetingExisits,
-    getAllMeetingUsers
 }

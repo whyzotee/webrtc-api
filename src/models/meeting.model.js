@@ -16,7 +16,7 @@ const meeting = mongoose.model("Meeting", Schema({
     },
     meetingUsers: [
         {
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "MeetingUser"
         }
     ]
@@ -28,8 +28,8 @@ const meeting = mongoose.model("Meeting", Schema({
             delete ret._v
         }
     },
-    timestamps: true
-})
+
+}, { timestamps: true })
 );
 
 module.exports = {
